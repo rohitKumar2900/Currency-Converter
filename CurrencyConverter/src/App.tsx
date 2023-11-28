@@ -1,7 +1,18 @@
 import './App.css';
 import { useState, useEffect, useReducer } from 'react';
 
-function currencyInfoReducer(state, action) {
+interface CurrencyInfoState {
+  data: Record<string, any>;
+}
+
+interface SetDataAction {
+  type: 'SET_DATA';
+  payload: Record<string, any>;
+}
+
+type CurrencyInfoAction = SetDataAction;
+
+function currencyInfoReducer(state : CurrencyInfoState, action : CurrencyInfoAction): CurrencyInfoState {
   switch (action.type) {
     case 'SET_DATA':
       return { ...state, data: action.payload };
@@ -23,7 +34,7 @@ function useCurrencyInfo(currency:string) {
 }
 
 function App() {
-  const [selectedCurrency, setSelectedCurrency] = useState("inr");
+  const [selectedCurrency, setSelectedCurrency] = useState("");
   const currencyInfo = useCurrencyInfo(selectedCurrency);
 
   // Display loading or error state while data is being fetched
